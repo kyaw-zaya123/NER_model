@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LinkedIn Profile — Hybrid</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,700;1,9..144,400&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600;700&family=Karla:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ── GLOBAL ── */
+:root {
+  /* Dark Premium palette */
+  --dp-bg:       #07090f;
+  --dp-s1:       #0d1117;
+  --dp-s2:       #131a24;
+  --dp-s3:       #1a2333;
+  --dp-border:   rgba(255,255,255,0.06);
+  --dp-border2:  rgba(255,255,255,0.12);
+  --dp-blue:     #3b82f6;
+  --dp-blue2:    #60a5fa;
+  --dp-cyan:     #22d3ee;
+  --dp-violet:   #8b5cf6;
+  --dp-gold:     #f59e0b;
+  --dp-green:    #10b981;
+  --dp-text:     #e2e8f0;
+  --dp-text2:    #94a3b8;
+  --dp-text3:    #64748b;
+
+  /* Editorial palette — Cool Slate/Teal */
+  --ed-cream:    #eef2f7;
+  --ed-cream2:   #e4eaf3;
+  --ed-cream3:   #d5dfed;
+  --ed-ink:      #0f1f2e;
+  --ed-ink2:     #1e3448;
+  --ed-ink3:     #4a6580;
+  --ed-ink4:     #7a95ab;
+  --ed-rust:     #0e7490;
+  --ed-gold:     #0891b2;
+  --ed-sage:     #0d9488;
+  --ed-slate:    #1e40af;
+  --ed-border:   rgba(15,31,46,0.1);
+  --ed-border2:  rgba(15,31,46,0.18);
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+
+body {
+  background: var(--dp-bg);
+  color: var(--dp-text);
+  font-family: 'Outfit', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Background orbs */
+.bg-layer { position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden; }
+.orb { position:absolute; border-radius:50%; filter:blur(90px); opacity:.45; animation:orbFloat 14s ease-in-out infinite alternate; }
+.orb-1 { width:550px;height:550px; top:-100px;left:-120px; background:radial-gradient(circle,rgba(59,130,246,0.22),transparent 65%); }
+.orb-2 { width:450px;height:450px; bottom:-80px;right:-60px; background:radial-gradient(circle,rgba(139,92,246,0.18),transparent 65%); animation-delay:-6s; }
+.orb-3 { width:300px;height:300px; top:45%;left:50%; background:radial-gradient(circle,rgba(34,211,238,0.09),transparent 65%); animation-delay:-10s; }
+@keyframes orbFloat { from{transform:translate(0,0)} to{transform:translate(28px,36px)} }
+
+/* ── PAGE LAYOUT ── */
+.page {
+  position:relative; z-index:1;
+  max-width:940px; margin:0 auto;
+  padding:36px 20px 100px;
+  display:grid;
+  grid-template-columns: 1fr 310px;
+  gap:18px;
+  align-items:start;
+}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
+@keyframes shimmer { from{background-position:200% center} to{background-position:-200% center} }
+@keyframes pulse { 0%,100%{box-shadow:0 0 0 0 rgba(16,185,129,.5)} 50%{box-shadow:0 0 0 6px rgba(16,185,129,0)} }
+.a1{animation:fadeUp .65s .05s ease both}
+.a2{animation:fadeUp .65s .15s ease both}
+.a3{animation:fadeUp .65s .25s ease both}
+.a4{animation:fadeUp .65s .35s ease both}
+.a5{animation:fadeUp .65s .45s ease both}
+.a6{animation:fadeUp .65s .55s ease both}
+
+/* ════════════════════════════════════
+   DARK PREMIUM CARDS
+════════════════════════════════════ */
+.dp-card {
+  background: var(--dp-s1);
+  border: 1px solid var(--dp-border);
+  border-radius: 18px;
+  position:relative; overflow:hidden;
+  margin-bottom:14px;
+  transition: border-color .3s, box-shadow .3s;
+}
+.dp-card:hover { border-color:var(--dp-border2); box-shadow:0 0 36px rgba(59,130,246,.07); }
+.dp-card::before {
+  content:''; position:absolute; top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(59,130,246,.4),rgba(139,92,246,.3),transparent);
+  opacity:0; transition:opacity .3s;
+}
+.dp-card:hover::before { opacity:1; }
+
+/* ── HEADER CARD ── */
+.header-card {
+  grid-column: 1 / -1;
+  background: var(--dp-s1);
+  border: 1px solid var(--dp-border);
+  border-radius: 18px;
+  overflow: hidden;
+  margin-bottom: 0;
+}
+
+.cover {
+  height:170px;
+  background:linear-gradient(135deg,#0f2040 0%,#1a1040 45%,#0a1628 75%,#0d1520 100%);
+  position:relative; overflow:hidden;
+}
+.cover-grid {
+  position:absolute; inset:0;
+  background-image:
+    linear-gradient(rgba(59,130,246,.06) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(59,130,246,.06) 1px,transparent 1px);
+  background-size:42px 42px;
+}
+.cover-glow {
+  position:absolute; inset:0;
+  background:
+    radial-gradient(ellipse at 28% 60%,rgba(59,130,246,.22) 0%,transparent 58%),
+    radial-gradient(ellipse at 82% 30%,rgba(139,92,246,.18) 0%,transparent 52%);
+}
+.cover-dots {
+  position:absolute; inset:0;
+  background-image:radial-gradient(circle,rgba(255,255,255,.1) 1px,transparent 1px);
+  background-size:26px 26px; opacity:.28;
+}
+
+.profile-inner { padding:0 32px 30px; }
+
+.avatar-row {
+  display:flex; align-items:flex-end; justify-content:space-between;
+  margin-top:-52px; margin-bottom:20px;
+}
+.avatar-ring {
+  width:104px;height:104px; border-radius:50%;
+  padding:3px;
+  background:linear-gradient(135deg,var(--dp-blue),var(--dp-violet),var(--dp-cyan));
+  position:relative; flex-shrink:0;
+}
+.avatar-ring::after {
+  content:''; position:absolute; inset:-5px; border-radius:50%;
+  background:linear-gradient(135deg,rgba(59,130,246,.28),rgba(139,92,246,.22));
+  filter:blur(9px); z-index:-1;
+}
+.avatar-inner {
+  width:100%;height:100%; border-radius:50%;
+  background:linear-gradient(135deg,#1e3a5f,#2d1b5e);
+  border:3px solid var(--dp-s1);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Fraunces',serif; font-size:34px; font-weight:700; color:#fff;
+}
+
+.action-btns { display:flex; gap:10px; padding-bottom:5px; }
+.btn-dp-primary {
+  background:linear-gradient(135deg,var(--dp-blue),var(--dp-violet));
+  color:#fff; border:none; padding:9px 22px; border-radius:22px;
+  font-family:'Outfit',sans-serif; font-size:13px; font-weight:600;
+  cursor:pointer; letter-spacing:.02em;
+  box-shadow:0 4px 18px rgba(59,130,246,.35);
+  transition:transform .2s,box-shadow .2s;
+}
+.btn-dp-primary:hover { transform:translateY(-2px); box-shadow:0 8px 26px rgba(59,130,246,.45); }
+.btn-dp-outline {
+  background:transparent; color:var(--dp-text2);
+  border:1px solid var(--dp-border2); padding:9px 22px; border-radius:22px;
+  font-family:'Outfit',sans-serif; font-size:13px; font-weight:500;
+  cursor:pointer; transition:background .2s,color .2s;
+}
+.btn-dp-outline:hover { background:var(--dp-s3); color:var(--dp-text); }
+
+.profile-name {
+  font-family:'Fraunces',serif; font-size:30px; font-weight:500;
+  line-height:1.15; margin-bottom:6px; letter-spacing:-.02em;
+  background:linear-gradient(135deg,#e2e8f0 30%,#94a3b8);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+}
+.shimmer-name {
+  background:linear-gradient(90deg,#e2e8f0 0%,#93c5fd 30%,#c4b5fd 50%,#93c5fd 70%,#e2e8f0 100%);
+  background-size:200% auto;
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  animation:shimmer 4s linear infinite;
+}
+.profile-hl { font-size:13.5px; color:var(--dp-text2); line-height:1.65; margin-bottom:16px; max-width:540px; }
+.url-link {
+  display:inline-flex;align-items:center;gap:5px;
+  font-size:11.5px; color:var(--dp-blue2);
+  background:rgba(59,130,246,.08); border:1px solid rgba(59,130,246,.18);
+  padding:3px 10px; border-radius:6px; margin-bottom:18px;
+  text-decoration:none; font-weight:500; font-family:'DM Mono',monospace;
+  transition:background .2s;
+}
+.url-link:hover { background:rgba(59,130,246,.16); }
+
+.badge-strip { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:22px; }
+.badge {
+  display:inline-flex;align-items:center;gap:5px;
+  padding:5px 13px; border-radius:20px;
+  font-size:11px; font-weight:600; letter-spacing:.04em; text-transform:uppercase;
+}
+.b-premium   { background:rgba(245,158,11,.12);color:#fbbf24;border:1px solid rgba(245,158,11,.28); }
+.b-open      { background:rgba(16,185,129,.12);color:#34d399;border:1px solid rgba(16,185,129,.28); }
+.b-hiring    { background:rgba(59,130,246,.12);color:#93c5fd;border:1px solid rgba(59,130,246,.28); }
+.b-influencer{ background:rgba(139,92,246,.12);color:#c4b5fd;border:1px solid rgba(139,92,246,.28); }
+.pulse-dot { width:7px;height:7px;border-radius:50%;background:var(--dp-green);animation:pulse 2s infinite;display:inline-block; }
+
+.stats-strip {
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:1px;background:var(--dp-border);
+  border-top:1px solid var(--dp-border);
+}
+.stat-cell { background:var(--dp-s1);padding:17px 12px;text-align:center;transition:background .2s; }
+.stat-cell:hover { background:var(--dp-s2); }
+.stat-n {
+  font-family:'Fraunces',serif; font-size:26px; font-weight:500;
+  background:linear-gradient(135deg,var(--dp-blue2),var(--dp-cyan));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  line-height:1; margin-bottom:4px;
+}
+.stat-l { font-size:10.5px;color:var(--dp-text3);text-transform:uppercase;letter-spacing:.06em;font-weight:600; }
+
+/* ── DP SECTION HEADING ── */
+.dp-sec-hd {
+  display:flex;align-items:center;gap:12px;
+  padding:22px 26px 0; margin-bottom:18px;
+}
+.dp-sec-icon {
+  width:32px;height:32px;border-radius:8px;
+  display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;
+}
+.i-blue   { background:rgba(59,130,246,.14); }
+.i-violet { background:rgba(139,92,246,.14); }
+.i-gold   { background:rgba(245,158,11,.14); }
+.i-green  { background:rgba(16,185,129,.14); }
+.i-cyan   { background:rgba(34,211,238,.14); }
+.dp-sec-title { font-family:'Fraunces',serif;font-size:19px;font-weight:500;flex:1; }
+.dp-sec-count { font-size:11.5px;color:var(--dp-text3);background:var(--dp-s3);padding:3px 9px;border-radius:9px; }
+.dp-divider { height:1px;background:linear-gradient(90deg,var(--dp-border2),transparent);margin:0 26px; }
+.dp-body { padding:20px 26px 26px; }
+
+/* ── DP ABOUT ── */
+.dp-about-text {
+  font-size:14px;color:#bdc8d8;line-height:1.85;
+  border-left:2px solid rgba(59,130,246,.35);padding-left:16px;
+}
+.top-chips { display:flex;flex-wrap:wrap;gap:7px;margin-top:16px; }
+.chip {
+  background:linear-gradient(135deg,rgba(59,130,246,.1),rgba(139,92,246,.1));
+  border:1px solid rgba(59,130,246,.22);
+  padding:5px 14px;border-radius:20px;
+  font-size:12.5px;color:var(--dp-blue2);font-weight:500;
+  transition:background .2s,border-color .2s,transform .15s;cursor:default;
+}
+.chip:hover { background:rgba(59,130,246,.2);border-color:rgba(59,130,246,.45);transform:translateY(-2px); }
+
+/* ── DP TIMELINE ── */
+.dp-tl { display:flex;flex-direction:column; }
+.dp-tl-item { display:grid;grid-template-columns:52px 1fr;gap:0 14px;padding-bottom:22px;position:relative; }
+.dp-tl-item:last-child { padding-bottom:20px; }
+.dp-tl-left { display:flex;flex-direction:column;align-items:center; }
+.dp-tl-ico {
+  width:46px;height:46px;border-radius:12px;
+  background:var(--dp-s2);border:1px solid var(--dp-border2);
+  display:flex;align-items:center;justify-content:center;
+  font-size:19px;flex-shrink:0;z-index:1;position:relative;
+  transition:border-color .2s,box-shadow .2s;
+}
+.dp-tl-item:hover .dp-tl-ico { border-color:rgba(59,130,246,.4);box-shadow:0 0 14px rgba(59,130,246,.15); }
+.dp-tl-vline { width:1px;flex:1;margin-top:6px;background:linear-gradient(to bottom,var(--dp-border2),transparent);min-height:20px; }
+.dp-tl-item:last-child .dp-tl-vline { display:none; }
+.dp-tl-r { padding-top:5px; }
+.dp-tl-name { font-size:15px;font-weight:600;margin-bottom:2px; }
+.dp-tl-co { font-size:13px;color:var(--dp-blue2);font-weight:500;margin-bottom:3px; }
+.dp-tl-meta { font-size:11.5px;color:var(--dp-text3);margin-bottom:8px;display:flex;gap:8px;flex-wrap:wrap; }
+.dp-tl-badge { font-size:10px;font-weight:700;padding:2px 8px;border-radius:9px;background:rgba(16,185,129,.1);color:#34d399;border:1px solid rgba(16,185,129,.2); }
+.dp-tl-desc { font-size:13px;color:var(--dp-text2);line-height:1.7; }
+.dp-tl-tags { display:flex;flex-wrap:wrap;gap:5px;margin-top:9px; }
+.dp-tl-tag { font-size:11px;padding:2px 9px;border-radius:7px;background:var(--dp-s3);color:var(--dp-text3);border:1px solid var(--dp-border); }
+
+/* ── DP SKILLS ── */
+.sg-label { font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--dp-text3);font-weight:700;margin-bottom:10px;font-family:'DM Mono',monospace; }
+.skill-group { margin-bottom:20px; }
+.skill-group:last-child { margin-bottom:0; }
+.skill-cloud { display:flex;flex-wrap:wrap;gap:7px; }
+.skill-pill {
+  position:relative;padding:7px 16px;border-radius:24px;
+  font-size:13px;font-weight:500;border:1px solid var(--dp-border2);
+  background:var(--dp-s2);color:var(--dp-text);cursor:default;
+  transition:all .2s;overflow:hidden;
+}
+.skill-pill::before {
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,var(--dp-blue),var(--dp-violet));
+  opacity:0;transition:opacity .2s;
+}
+.skill-pill span { position:relative;z-index:1; }
+.skill-pill:hover { border-color:transparent;color:#fff;transform:translateY(-2px);box-shadow:0 6px 18px rgba(59,130,246,.25); }
+.skill-pill:hover::before { opacity:1; }
+
+/* ── DP CERTS ── */
+.dp-cert-grid { display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px; }
+.dp-cert-card {
+  background:var(--dp-s2);border:1px solid var(--dp-border);
+  border-radius:13px;padding:15px;
+  display:flex;gap:12px;align-items:flex-start;
+  transition:border-color .2s,box-shadow .2s,transform .2s;position:relative;overflow:hidden;
+}
+.dp-cert-card::before { content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--dp-gold),#fbbf24);opacity:0;transition:opacity .2s; }
+.dp-cert-card:hover { border-color:rgba(245,158,11,.3);box-shadow:0 4px 18px rgba(245,158,11,.08);transform:translateY(-2px); }
+.dp-cert-card:hover::before { opacity:1; }
+.dp-cert-ico { width:40px;height:40px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0;background:linear-gradient(135deg,rgba(245,158,11,.14),rgba(251,191,36,.08));border:1px solid rgba(245,158,11,.2); }
+.dp-cert-name { font-size:13px;font-weight:600;line-height:1.35;margin-bottom:3px; }
+.dp-cert-issuer { font-size:11.5px;color:var(--dp-text3);margin-bottom:5px; }
+.dp-cert-year { font-size:10.5px;font-weight:700;color:#fbbf24;background:rgba(245,158,11,.1);padding:2px 8px;border-radius:7px;display:inline-block; }
+
+/* ════════════════════════════════════
+   MORE PROFILES — DP STYLE (LinkedIn cards)
+════════════════════════════════════ */
+.mp-section { padding:20px 26px 26px; }
+.mp-grid { display:flex;flex-direction:column;gap:12px; }
+
+.mp-profile-card {
+  display:flex;gap:14px;align-items:center;
+  background:var(--dp-s2); border:1px solid var(--dp-border);
+  border-radius:14px; padding:14px 16px;
+  transition:border-color .25s,background .25s,transform .2s,box-shadow .2s;
+  cursor:pointer; text-decoration:none; color:inherit;
+  position:relative; overflow:hidden;
+}
+.mp-profile-card::after {
+  content:''; position:absolute; top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,var(--dp-blue),var(--dp-violet));
+  opacity:0; transition:opacity .25s;
+}
+.mp-profile-card:hover { border-color:rgba(59,130,246,.35);background:var(--dp-s3);transform:translateY(-3px);box-shadow:0 10px 32px rgba(59,130,246,.12); }
+.mp-profile-card:hover::after { opacity:1; }
+
+.mp-avatar {
+  width:52px;height:52px;border-radius:50%;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Fraunces',serif;font-size:18px;font-weight:700;color:#fff;
+  position:relative;
+}
+.mp-avatar::before {
+  content:''; position:absolute;inset:-2px;border-radius:50%;
+  background:linear-gradient(135deg,var(--dp-blue),var(--dp-violet));
+  z-index:0;
+}
+.mp-avatar-inner {
+  width:100%;height:100%;border-radius:50%;
+  background:linear-gradient(135deg,#1e3a5f,#2d1b5e);
+  border:2px solid var(--dp-s2);
+  display:flex;align-items:center;justify-content:center;
+  position:relative;z-index:1;
+  font-family:'Fraunces',serif;font-size:16px;font-weight:700;color:#fff;
+}
+
+.mp-info { flex:1;min-width:0; }
+.mp-name { font-size:14px;font-weight:600;color:var(--dp-text);margin-bottom:2px; white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
+.mp-handle {
+  font-size:11.5px;color:var(--dp-blue2);
+  font-family:'DM Mono',monospace;font-weight:400;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.mp-headline { font-size:12px;color:var(--dp-text3);margin-top:3px;line-height:1.4; white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
+
+.mp-actions { display:flex;flex-direction:column;gap:6px;align-items:flex-end;flex-shrink:0; }
+.mp-btn-connect {
+  background:linear-gradient(135deg,var(--dp-blue),var(--dp-violet));
+  color:#fff;border:none;padding:6px 14px;border-radius:16px;
+  font-family:'Outfit',sans-serif;font-size:11.5px;font-weight:600;
+  cursor:pointer;letter-spacing:.02em;white-space:nowrap;
+  box-shadow:0 3px 12px rgba(59,130,246,.3);
+  transition:transform .15s,box-shadow .15s;
+}
+.mp-btn-connect:hover { transform:translateY(-1px);box-shadow:0 5px 18px rgba(59,130,246,.4); }
+.mp-btn-follow {
+  background:transparent;color:var(--dp-text3);
+  border:1px solid var(--dp-border2);padding:5px 14px;border-radius:16px;
+  font-family:'Outfit',sans-serif;font-size:11px;font-weight:500;
+  cursor:pointer;white-space:nowrap;transition:background .2s,color .2s;
+}
+.mp-btn-follow:hover { background:var(--dp-s3);color:var(--dp-text2); }
+
+.mp-premium-badge {
+  display:inline-flex;align-items:center;gap:3px;
+  font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;
+  color:#fbbf24;background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.22);
+  padding:2px 7px;border-radius:8px;
+}
+
+/* ════════════════════════════════════
+   SIDEBAR
+════════════════════════════════════ */
+.side-col { display:flex;flex-direction:column;gap:16px; }
+
+/* ── LOCATION DP card ── */
+.loc-dp {
+  background:var(--dp-s2);border:1px solid var(--dp-border);
+  border-radius:15px;padding:20px;
+}
+.loc-flag { font-size:32px;margin-bottom:12px;display:block; }
+.loc-city { font-family:'Fraunces',serif;font-size:22px;font-weight:500;color:var(--dp-text);margin-bottom:3px; }
+.loc-country { font-size:13px;color:var(--dp-text3);margin-bottom:14px; }
+.loc-rows { display:flex;flex-direction:column;gap:0; }
+.loc-row { display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--dp-border); }
+.loc-row:last-child { border-bottom:none; }
+.loc-k { font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--dp-text3);font-weight:700;font-family:'DM Mono',monospace; }
+.loc-v { font-size:12.5px;color:var(--dp-text2);font-weight:500; }
+
+/* ── EDUCATION DP ── */
+.edu-dp { display:flex;flex-direction:column;gap:10px;padding:0 26px 26px; }
+.edu-dp-item {
+  display:flex;gap:12px;align-items:flex-start;padding:13px;
+  background:var(--dp-s2);border:1px solid var(--dp-border);border-radius:12px;
+  transition:border-color .2s,transform .2s;
+}
+.edu-dp-item:hover { border-color:rgba(139,92,246,.35);transform:translateY(-2px); }
+.edu-dp-ico { width:42px;height:42px;border-radius:10px;background:linear-gradient(135deg,rgba(139,92,246,.18),rgba(59,130,246,.1));border:1px solid rgba(139,92,246,.2);display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0; }
+.edu-dp-degree { font-size:13px;font-weight:600;margin-bottom:2px;color:var(--dp-text); }
+.edu-dp-school { font-size:12px;color:rgba(139,92,246,.9);font-weight:500;margin-bottom:2px; }
+.edu-dp-date { font-size:11px;color:var(--dp-text3);font-family:'DM Mono',monospace; }
+
+/* ════════════════════════════════════
+   METADATA — EDITORIAL STYLE
+════════════════════════════════════ */
+.meta-editorial {
+  background: var(--ed-cream);
+  border: 1px solid var(--ed-border2);
+  border-radius: 2px;
+  overflow: hidden;
+  position: relative;
+}
+/* left accent stripe */
+.meta-editorial::before {
+  content:''; position:absolute; top:0;left:0;bottom:0;width:3px;
+  background:linear-gradient(to bottom,#0e7490,#0891b2,#0d9488);
+}
+
+.meta-ed-header {
+  padding:16px 20px 12px 22px;
+  border-bottom:1px solid var(--ed-border2);
+  background:#fff;
+}
+.meta-ed-issue {
+  font-family:'DM Mono',monospace;
+  font-size:9px;text-transform:uppercase;letter-spacing:.1em;
+  color:var(--ed-ink4);font-weight:500;margin-bottom:4px;
+}
+.meta-ed-title {
+  font-family:'Fraunces',serif;
+  font-size:17px;font-weight:500;color:var(--ed-ink);
+  letter-spacing:-.01em;
+}
+
+.meta-ed-body { padding:4px 0; }
+.meta-ed-row {
+  display:flex;align-items:stretch;
+  border-bottom:1px solid var(--ed-border);
+  transition:background .15s;
+}
+.meta-ed-row:last-child { border-bottom:none; }
+.meta-ed-row:hover { background:rgba(255,255,255,0.6); }
+
+.meta-ed-key {
+  width:100px;flex-shrink:0;
+  padding:10px 12px 10px 22px;
+  font-family:'DM Mono',monospace;
+  font-size:9.5px;text-transform:uppercase;
+  letter-spacing:.07em;color:var(--ed-ink4);
+  font-weight:500;
+  border-right:1px solid var(--ed-border);
+  display:flex;align-items:center;
+  background:rgba(242,237,228,.4);
+}
+.meta-ed-val {
+  flex:1;padding:10px 14px;
+  font-family:'Karla',sans-serif;
+  font-size:12.5px;font-weight:600;color:var(--ed-ink2);
+  display:flex;align-items:center;gap:6px;
+}
+.meta-ed-val.mono-val {
+  font-family:'DM Mono',monospace;
+  font-size:11px;color:var(--ed-slate);
+  font-weight:400;
+}
+.bool-true  { color:var(--ed-sage);  }
+.bool-false { color:var(--ed-ink4);  }
+
+.meta-ed-stamp {
+  padding:12px 20px 14px 22px;
+  border-top:1px solid var(--ed-border2);
+  background:rgba(242,237,228,.5);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.meta-ed-stamp-label {
+  font-family:'DM Mono',monospace;
+  font-size:9px;color:var(--ed-ink4);
+  text-transform:uppercase;letter-spacing:.09em;
+}
+.meta-ed-stamp-val {
+  font-family:'Fraunces',serif;
+  font-size:13px;font-weight:500;
+  color:var(--ed-rust);
+  font-style:italic;
+}
+
+/* ── RESPONSIVE ── */
+@media(max-width:680px) {
+  .page { grid-template-columns:1fr; }
+  .header-card { grid-column:1; }
+  .stats-strip { grid-template-columns:repeat(2,1fr); }
+  .profile-inner { padding:0 18px 24px; }
+}
+</style>
+</head>
+<body>
+
+<div class="bg-layer">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+</div>
+
+<div class="page">
+
+  <!-- ══ HEADER ══ -->
+  <div class="header-card a1">
+    <div class="cover">
+      <div class="cover-grid"></div>
+      <div class="cover-glow"></div>
+      <div class="cover-dots"></div>
+    </div>
+    <div class="profile-inner">
+      <div class="avatar-row">
+        <div class="avatar-ring">
+          <div class="avatar-inner">AK</div>
+        </div>
+        <div class="action-btns">
+          <button class="btn-dp-primary">+ Connect</button>
+          <button class="btn-dp-outline">Message</button>
+        </div>
+      </div>
+      <a class="url-link" href="#">&#x2197; linkedin.com/in/aungkoko</a>
+      <div class="profile-name shimmer-name">Aung Ko Ko</div>
+      <div class="profile-hl">Senior Software Engineer &nbsp;·&nbsp; Full-Stack Architect &nbsp;·&nbsp; Myanmar NLP Researcher</div>
+      <div class="badge-strip">
+        <span class="badge b-premium">⭐ Premium</span>
+        <span class="badge b-open"><span class="pulse-dot"></span>&nbsp;Open to Work</span>
+        <span class="badge b-hiring">📢 Hiring</span>
+        <span class="badge b-influencer">✦ Influencer</span>
+      </div>
+    </div>
+    <div class="stats-strip">
+      <div class="stat-cell"><div class="stat-n">4,210</div><div class="stat-l">Connections</div></div>
+      <div class="stat-cell"><div class="stat-n">18.5K</div><div class="stat-l">Followers</div></div>
+      <div class="stat-cell"><div class="stat-n">Mar '19</div><div class="stat-l">Registered</div></div>
+      <div class="stat-cell"><div class="stat-n">Public</div><div class="stat-l">Profile type</div></div>
+    </div>
+  </div>
+
+  <!-- ══ MAIN COLUMN ══ -->
+  <div style="display:flex;flex-direction:column;gap:0">
+
+    <!-- About -->
+    <div class="dp-card a2">
+      <div class="dp-sec-hd">
+        <div class="dp-sec-icon i-blue">📝</div>
+        <div class="dp-sec-title">About</div>
+      </div>
+      <div class="dp-divider"></div>
+      <div class="dp-body">
+        <div class="dp-about-text">
+          7+ years building high-performance distributed systems across Southeast Asia. Currently bridging production engineering with NLP research for Myanmar language — building CoNLL-format NER pipelines using XLM-RoBERTa with 39K+ annotated sentences and BIOES span correction.<br><br>
+          I ship fast, iterate thoughtfully, and believe great software is as much about clarity of thought as code quality.
+        </div>
+        <div class="top-chips">
+          <span class="chip">🐍 Python</span>
+          <span class="chip">⚛️ React</span>
+          <span class="chip">🐘 PostgreSQL</span>
+          <span class="chip">🧠 NLP / NER</span>
+          <span class="chip">☁️ AWS</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Experience -->
+    <div class="dp-card a3" style="margin-top:14px">
+      <div class="dp-sec-hd">
+        <div class="dp-sec-icon i-blue">💼</div>
+        <div class="dp-sec-title">Experience</div>
+        <span class="dp-sec-count">4 positions</span>
+      </div>
+      <div class="dp-divider"></div>
+      <div class="dp-body">
+        <div class="dp-tl">
+          <div class="dp-tl-item">
+            <div class="dp-tl-left"><div class="dp-tl-ico">🏢</div><div class="dp-tl-vline"></div></div>
+            <div class="dp-tl-r">
+              <div class="dp-tl-name">Senior Software Engineer <span class="dp-tl-badge" style="margin-left:8px">● Current</span></div>
+              <div class="dp-tl-co">TechCorp Myanmar · Full-time</div>
+              <div class="dp-tl-meta"><span>Jan 2022 – Present</span><span>·</span><span>3 yrs 2 mos</span></div>
+              <div class="dp-tl-desc">Leading backend architecture for fintech platform serving 500K+ users. Migrated monolith → microservices, cutting API latency by 40%.</div>
+              <div class="dp-tl-tags"><span class="dp-tl-tag">Python</span><span class="dp-tl-tag">Kafka</span><span class="dp-tl-tag">Kubernetes</span><span class="dp-tl-tag">PostgreSQL</span></div>
+            </div>
+          </div>
+          <div class="dp-tl-item">
+            <div class="dp-tl-left"><div class="dp-tl-ico">🔬</div><div class="dp-tl-vline"></div></div>
+            <div class="dp-tl-r">
+              <div class="dp-tl-name">NLP Research Engineer</div>
+              <div class="dp-tl-co">Myanmar NLP Group · Part-time</div>
+              <div class="dp-tl-meta"><span>Jun 2021 – Present</span></div>
+              <div class="dp-tl-desc">CoNLL NER pipeline for Myanmar using BIOES annotation, XLM-RoBERTa fine-tuning, 39K+ training sentences.</div>
+              <div class="dp-tl-tags"><span class="dp-tl-tag">NLP</span><span class="dp-tl-tag">BIOES</span><span class="dp-tl-tag">CoNLL</span><span class="dp-tl-tag">XLM-RoBERTa</span></div>
+            </div>
+          </div>
+          <div class="dp-tl-item">
+            <div class="dp-tl-left"><div class="dp-tl-ico">🚀</div><div class="dp-tl-vline"></div></div>
+            <div class="dp-tl-r">
+              <div class="dp-tl-name">Software Engineer</div>
+              <div class="dp-tl-co">Startup Labs · Full-time</div>
+              <div class="dp-tl-meta"><span>Mar 2019 – Dec 2021</span><span>·</span><span>2 yrs 9 mos</span></div>
+              <div class="dp-tl-desc">Built REST APIs and real-time dashboards for logistics tracking. Onboarded 12 enterprise clients.</div>
+              <div class="dp-tl-tags"><span class="dp-tl-tag">TypeScript</span><span class="dp-tl-tag">React</span><span class="dp-tl-tag">Redis</span><span class="dp-tl-tag">Docker</span></div>
+            </div>
+          </div>
+          <div class="dp-tl-item">
+            <div class="dp-tl-left"><div class="dp-tl-ico">💻</div></div>
+            <div class="dp-tl-r">
+              <div class="dp-tl-name">Junior Developer</div>
+              <div class="dp-tl-co">WebAgency Yangon · Internship</div>
+              <div class="dp-tl-meta"><span>Jul 2018 – Feb 2019</span><span>·</span><span>7 mos</span></div>
+              <div class="dp-tl-desc">Client websites, internal tooling, first exposure to agile and CI/CD.</div>
+              <div class="dp-tl-tags"><span class="dp-tl-tag">HTML/CSS</span><span class="dp-tl-tag">JavaScript</span><span class="dp-tl-tag">PHP</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Skills -->
+    <div class="dp-card a4" style="margin-top:14px">
+      <div class="dp-sec-hd">
+        <div class="dp-sec-icon i-cyan">⚡</div>
+        <div class="dp-sec-title">Skills</div>
+        <span class="dp-sec-count">18 skills</span>
+      </div>
+      <div class="dp-divider"></div>
+      <div class="dp-body">
+        <div class="skill-group">
+          <div class="sg-label">Backend &amp; Systems</div>
+          <div class="skill-cloud">
+            <div class="skill-pill"><span>Python</span></div><div class="skill-pill"><span>Node.js</span></div>
+            <div class="skill-pill"><span>TypeScript</span></div><div class="skill-pill"><span>GraphQL</span></div>
+            <div class="skill-pill"><span>Microservices</span></div>
+          </div>
+        </div>
+        <div class="dp-divider" style="margin:16px 0"></div>
+        <div class="skill-group">
+          <div class="sg-label">Data &amp; AI / NLP</div>
+          <div class="skill-cloud">
+            <div class="skill-pill"><span>PostgreSQL</span></div><div class="skill-pill"><span>Redis</span></div>
+            <div class="skill-pill"><span>Kafka</span></div><div class="skill-pill"><span>XLM-RoBERTa</span></div>
+            <div class="skill-pill"><span>NLP / NER</span></div>
+          </div>
+        </div>
+        <div class="dp-divider" style="margin:16px 0"></div>
+        <div class="skill-group">
+          <div class="sg-label">Cloud &amp; DevOps</div>
+          <div class="skill-cloud">
+            <div class="skill-pill"><span>AWS</span></div><div class="skill-pill"><span>Docker</span></div>
+            <div class="skill-pill"><span>Kubernetes</span></div><div class="skill-pill"><span>Terraform</span></div>
+            <div class="skill-pill"><span>CI/CD</span></div>
+          </div>
+        </div>
+        <div class="dp-divider" style="margin:16px 0"></div>
+        <div class="skill-group">
+          <div class="sg-label">Frontend</div>
+          <div class="skill-cloud">
+            <div class="skill-pill"><span>React</span></div><div class="skill-pill"><span>Next.js</span></div>
+            <div class="skill-pill"><span>Tailwind CSS</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Certifications -->
+    <div class="dp-card a5" style="margin-top:14px">
+      <div class="dp-sec-hd">
+        <div class="dp-sec-icon i-gold">🏅</div>
+        <div class="dp-sec-title">Certifications</div>
+        <span class="dp-sec-count">3 certs</span>
+      </div>
+      <div class="dp-divider"></div>
+      <div class="dp-body">
+        <div class="dp-cert-grid">
+          <div class="dp-cert-card"><div class="dp-cert-ico">☁️</div><div><div class="dp-cert-name">AWS Certified Solutions Architect</div><div class="dp-cert-issuer">Amazon Web Services</div><span class="dp-cert-year">2023</span></div></div>
+          <div class="dp-cert-card"><div class="dp-cert-ico">🧠</div><div><div class="dp-cert-name">Deep Learning Specialization</div><div class="dp-cert-issuer">Coursera / DeepLearning.AI</div><span class="dp-cert-year">2022</span></div></div>
+          <div class="dp-cert-card"><div class="dp-cert-ico">⚙️</div><div><div class="dp-cert-name">Certified Kubernetes Administrator</div><div class="dp-cert-issuer">Cloud Native Computing Foundation</div><span class="dp-cert-year">2021</span></div></div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /main col -->
+
+  <!-- ══ SIDEBAR ══ -->
+  <div class="side-col">
+
+    <!-- Location -->
+    <div class="dp-card a2">
+      <div class="dp-body" style="padding:20px">
+        <div class="loc-dp">
+          <span class="loc-flag">📍</span>
+          <div class="loc-city">Yangon</div>
+          <div class="loc-country">Myanmar (Burma)</div>
+          <div class="loc-rows">
+            <div class="loc-row"><span class="loc-k">Timezone</span><span class="loc-v">GMT +6:30</span></div>
+            <div class="loc-row"><span class="loc-k">Code</span><span class="loc-v">MM</span></div>
+            <div class="loc-row"><span class="loc-k">Region</span><span class="loc-v">Southeast Asia</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Education -->
+    <div class="dp-card a3">
+      <div class="dp-sec-hd">
+        <div class="dp-sec-icon i-violet">🎓</div>
+        <div class="dp-sec-title">Education</div>
+      </div>
+      <div class="dp-divider"></div>
+      <div class="edu-dp">
+        <div class="edu-dp-item">
+          <div class="edu-dp-ico">🏛️</div>
+          <div>
+            <div class="edu-dp-degree">B.Sc. Computer Science &amp; Engineering</div>
+            <div class="edu-dp-school">Yangon Technological University</div>
+            <div class="edu-dp-date">2014 – 2018 · First Class Honours</div>
+          </div>
+        </div>
+        <div class="edu-dp-item">
+          <div class="edu-dp-ico">📚</div>
+          <div>
+            <div class="edu-dp-degree">Advanced ML Programme</div>
+            <div class="edu-dp-school">Coursera / Stanford Online</div>
+            <div class="edu-dp-date">2021 · Certificate</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ METADATA — Editorial Style ══ -->
+    <div class="meta-editorial a4">
+      <div class="meta-ed-header">
+        <div class="meta-ed-issue">Profile · Record No. 07</div>
+        <div class="meta-ed-title">Metadata</div>
+      </div>
+      <div class="meta-ed-body">
+        <div class="meta-ed-row">
+          <div class="meta-ed-key">ID</div>
+          <div class="meta-ed-val mono-val">1773631028</div>
+        </div>
+        <div class="meta-ed-row">
+          <div class="meta-ed-key">Identifier</div>
+          <div class="meta-ed-val mono-val">aungkoko</div>
+        </div>
+        <div class="meta-ed-row">
+          <div class="meta-ed-key">Premium</div>
+          <div class="meta-ed-val bool-true">✔ true</div>
+        </div>
+        <div class="meta-ed-row">
+          <div class="meta-ed-key">Influencer</div>
+          <div class="meta-ed-val bool-true">✔ true</div>
+        </div>
+        <div class="meta-ed-row">
+          <div class="meta-ed-key">Hiring</div>
+          <div class="meta-ed-val bool-true">✔ true</div>
+        </div>
+        <div class="meta-ed-row">
+          <div class="meta-ed-key">Open Work</div>
+          <div class="meta-ed-val bool-true">✔ true</div>
+        </div>
+        <div class="meta-ed-row">
+          <div class="meta-ed-key">Memorial</div>
+          <div class="meta-ed-val bool-false">✗ false</div>
+        </div>
+        <div class="meta-ed-row">
+          <div class="meta-ed-key">Connections</div>
+          <div class="meta-ed-val mono-val">4,210</div>
+        </div>
+        <div class="meta-ed-row">
+          <div class="meta-ed-key">Followers</div>
+          <div class="meta-ed-val mono-val">18,540</div>
+        </div>
+        <div class="meta-ed-row">
+          <div class="meta-ed-key">Cover Pic</div>
+          <div class="meta-ed-val mono-val">jsonb { url … }</div>
+        </div>
+        <div class="meta-ed-row">
+          <div class="meta-ed-key">Element</div>
+          <div class="meta-ed-val mono-val">jsonb { … }</div>
+        </div>
+      </div>
+      <div class="meta-ed-stamp">
+        <span class="meta-ed-stamp-label">Registered</span>
+        <span class="meta-ed-stamp-val">Mar 15, 2019</span>
+      </div>
+    </div>
+
+    <!-- ══ MORE PROFILES — LinkedIn Premium Cards ══ -->
+    <div class="dp-card a5">
+      <div class="dp-sec-hd">
+        <div class="dp-sec-icon i-blue">👥</div>
+        <div class="dp-sec-title">More Profiles</div>
+        <span class="dp-sec-count">4 profiles</span>
+      </div>
+      <div class="dp-divider"></div>
+      <div class="mp-section" style="padding:16px 18px 20px">
+        <div class="mp-grid">
+
+          <div class="mp-profile-card" style="flex-wrap:wrap;gap:10px">
+            <div class="mp-avatar"><div class="mp-avatar-inner">MM</div></div>
+            <div class="mp-info" style="min-width:0;flex:1">
+              <div class="mp-name">Min Min Thant <span class="mp-premium-badge">⭐</span></div>
+              <div class="mp-handle">in/minminthant</div>
+              <div class="mp-headline">CTO · Fintech Myanmar · ex-Grab</div>
+            </div>
+            <div class="mp-actions" style="flex-direction:row;align-items:center;width:100%;justify-content:flex-end">
+              <button class="mp-btn-connect">+ Connect</button>
+              <button class="mp-btn-follow">Follow</button>
+            </div>
+          </div>
+
+          <div class="mp-profile-card" style="flex-wrap:wrap;gap:10px">
+            <div class="mp-avatar"><div class="mp-avatar-inner">SK</div></div>
+            <div class="mp-info" style="min-width:0;flex:1">
+              <div class="mp-name">Su Kyi Aye</div>
+              <div class="mp-handle">in/sukyiaye</div>
+              <div class="mp-headline">ML Engineer · Myanmar NLP</div>
+            </div>
+            <div class="mp-actions" style="flex-direction:row;align-items:center;width:100%;justify-content:flex-end">
+              <button class="mp-btn-connect">+ Connect</button>
+              <button class="mp-btn-follow">Follow</button>
+            </div>
+          </div>
+
+          <div class="mp-profile-card" style="flex-wrap:wrap;gap:10px">
+            <div class="mp-avatar"><div class="mp-avatar-inner">KZ</div></div>
+            <div class="mp-info" style="min-width:0;flex:1">
+              <div class="mp-name">Kyaw Zin Htet <span class="mp-premium-badge">⭐</span></div>
+              <div class="mp-handle">in/kyawzinhtet</div>
+              <div class="mp-headline">Senior Backend · Kubernetes · SG</div>
+            </div>
+            <div class="mp-actions" style="flex-direction:row;align-items:center;width:100%;justify-content:flex-end">
+              <button class="mp-btn-connect">+ Connect</button>
+              <button class="mp-btn-follow">Follow</button>
+            </div>
+          </div>
+
+          <div class="mp-profile-card" style="flex-wrap:wrap;gap:10px">
+            <div class="mp-avatar"><div class="mp-avatar-inner">TN</div></div>
+            <div class="mp-info" style="min-width:0;flex:1">
+              <div class="mp-name">Thida Nwe</div>
+              <div class="mp-handle">in/thidanwe</div>
+              <div class="mp-headline">Data Scientist · Open Source</div>
+            </div>
+            <div class="mp-actions" style="flex-direction:row;align-items:center;width:100%;justify-content:flex-end">
+              <button class="mp-btn-connect">+ Connect</button>
+              <button class="mp-btn-follow">Follow</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /sidebar -->
+
+</div><!-- /page -->
+</body>
+</html>
